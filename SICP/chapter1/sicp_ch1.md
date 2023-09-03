@@ -31,7 +31,7 @@ Lisp 三元素：
 * 组合的嵌套提供了一种组合操作的方法
 * 将名称与值关联起来的定义提供了有限的抽象方法
 
-```cpp
+```scheme
 (define (<name> <formal parameters>) <body>)
 ```
 
@@ -45,6 +45,60 @@ Lisp 三元素：
 
 代换模型可能会在 mutable-data 下失效。
 演算顺序与二义性。
+__normal-order evaluation__: 全展开后归约
+__applicative-order evaluation__: 先参数演算后应用
+对于可以使用替换建模并产生合法值的过程应用，正常顺序和适用顺序求值结果是相同的。
 
 ### 1.1.6 Conditional Expressions and Predicates
+Predicates: 谓词
 
+Lisp 条件分析：
+```scheme
+(cond (<p1> <e1>)
+      (<p2> <e2>)
+      ...
+      (<pn> <en>))
+```
+
+```scheme
+(cond (<p1> <e1>)
+      (<p2> <e2>)
+      ...
+      (else <en>))
+```
+
+```scheme
+(<p1> <e2>) ; clauses, 从句
+; <p1> 是一个谓词（或者叫一个断言） 
+```
+
+```scheme
+(if <predicate> <consequent> <alternative>)
+```
+
+复合谓词可以通过下面算符构建：
+```scheme
+(and <e1> ... <en>)
+(or <e1> ... <en>)
+(not <e>)
+```
+注意：
+* 当前 Lisp 表达式中还没有赋值语句，= 是判断是否相等
+
+解释器会按照从左到右的顺序对每个表达式进行演算。
+
+### 1.1.7 Example: Square Roots by Newton's Method
+square roots
+```latex
+y_{n+1} = \frac{y_{n}+x/y_{n}}{2}
+```
+
+### 1.1.8  Procedures as Black-Box Abstractions
+* block structure (嵌套的定义)
+We will use block structure extensively to help us break up large programs into tractable pieces.
+
+* lexical scoping
+Lexical scoping dictates that free variables in a procedure are taken to refer to bindings made by enclosing procedure definitions; that is, they are looked up in the environment in which the procedure was defined.
+
+## 1.2 Procedures and the Processes They Generate
+A procedure is a pattern for the local evolution of a computational process.
